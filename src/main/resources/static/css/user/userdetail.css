@@ -1,0 +1,19 @@
+body{
+    background-color: #F7F7F7;
+}
+.main{
+    width: 70%;
+    margin: 0 auto;
+}
+div.main > div.row{
+    display: flex;
+    flex-wrap: wrap;
+}
+div.main > div.row > div.col-sm-8{
+    display: flex;
+    flex-direction: column;
+    margin-left: 2%;
+}
+#userinfo{
+    height: 100%;
+}

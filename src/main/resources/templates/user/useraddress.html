@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>用户地址</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+	<link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+	<link rel="stylesheet" th:href="@{/css/user/useraddress.css}">
+	<script>
+		$(document).ready(function(){
+			$.ajax({
+				url:"../address/users/"+[[${session.user.uid}]]+".do",
+				type:"GET",
+				success:function (data) {
+                    var addresses = JSON.parse(data);
+                    console.log(addresses);
+                    for(var i=0;i<addresses.length;i++){
+						$(".useraddress").append(
+						    "<div class='desktop-addressblock'>" +
+								"<div class='linkman'>"+addresses[i].linkman +"</div>"+
+								"<div class='deleteaddress'>" +
+									"<button class='btn' type='button' onclick='remove("+addresses[i].aid+")'>删除</button>" +
+								"</div>"+
+								"<div class='addressmsg'>" +
+									"<div class='uaddress'>" +"地址："+addresses[i].uaddress+"</div>" +
+									"<div class='utel'>手机号："+addresses[i].utel+"</div>" +
+								"</div>"+
+							"</div>"
+						)
+					}
+					$(".useraddress").append(
+					    "<div class='desktop-addressblock newaddress'>" +
+							"<a href='../address/add.html'>" +
+							"<span class=\"glyphicon glyphicon-plus\"> </span>添加新地址" +
+							"</a>" +
+						"</div>"
+					)
+
+                }
+			})
+        })
+
+        function remove(aid){
+		    var r=confirm("确认要删除地址吗？")
+            if(r == true){
+                $(function(){
+                    $.ajax({
+                        url : "../address/"+aid+".do",
+                        type : "DELETE",
+                        data : {
+                            "aid" : aid
+                        },
+                        success : function(data) {
+                            if (data == "1"){
+                                alert("删除成功");
+                                location.reload();
+							}else {
+                                alert("删除失败");
+                                location.reload();
+							}
+
+                        }
+                    })
+                })
+            }
+        }
+
+	</script>
+</head>
+
+<body>
+<div th:include="user/usernav"></div>
+	<div class="main">
+		<div class="row">
+			<div th:include="user/left"></div>
+			<div class="col-sm-8 well">
+				<div class="addressheader">
+					<span>用户地址</span>
+				</div>
+				<div class="useraddress"></div>
+			</div>
+			<div th:include="user/footer"></div>
+		</div>
+	</div>
+</body>
+</html>

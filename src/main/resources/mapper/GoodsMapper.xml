@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etc.dao.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.etc.entity.Goods" >
+    <id column="gid" property="gid" jdbcType="INTEGER" />
+    <result column="gname" property="gname" jdbcType="VARCHAR" />
+    <result column="gprice" property="gprice" jdbcType="DECIMAL" />
+    <result column="gcount" property="gcount" jdbcType="INTEGER" />
+    <result column="ginfo" property="ginfo" jdbcType="VARCHAR" />
+    <result column="gimage" property="gimage" jdbcType="VARCHAR" />
+    <result column="gbox" property="gbox" jdbcType="DECIMAL" />
+    <result column="gtid" property="gtid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    gid, gname, gprice, gcount, ginfo, gimage, gbox, gtid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.etc.entity.GoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where gid = #{gid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from goods
+    where gid = #{gid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.etc.entity.GoodsExample" >
+    delete from goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.etc.entity.Goods" >
+    <selectKey resultType="java.lang.Integer" keyProperty="gid" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into goods (gname, gprice, gcount, 
+      ginfo, gimage, gbox, 
+      gtid)
+    values (#{gname,jdbcType=VARCHAR}, #{gprice,jdbcType=DECIMAL}, #{gcount,jdbcType=INTEGER}, 
+      #{ginfo,jdbcType=VARCHAR}, #{gimage,jdbcType=VARCHAR}, #{gbox,jdbcType=DECIMAL}, 
+      #{gtid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.etc.entity.Goods" >
+    <selectKey resultType="java.lang.Integer" keyProperty="gid" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gname != null" >
+        gname,
+      </if>
+      <if test="gprice != null" >
+        gprice,
+      </if>
+      <if test="gcount != null" >
+        gcount,
+      </if>
+      <if test="ginfo != null" >
+        ginfo,
+      </if>
+      <if test="gimage != null" >
+        gimage,
+      </if>
+      <if test="gbox != null" >
+        gbox,
+      </if>
+      <if test="gtid != null" >
+        gtid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gname != null" >
+        #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="gprice != null" >
+        #{gprice,jdbcType=DECIMAL},
+      </if>
+      <if test="gcount != null" >
+        #{gcount,jdbcType=INTEGER},
+      </if>
+      <if test="ginfo != null" >
+        #{ginfo,jdbcType=VARCHAR},
+      </if>
+      <if test="gimage != null" >
+        #{gimage,jdbcType=VARCHAR},
+      </if>
+      <if test="gbox != null" >
+        #{gbox,jdbcType=DECIMAL},
+      </if>
+      <if test="gtid != null" >
+        #{gtid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.etc.entity.GoodsExample" resultType="java.lang.Integer" >
+    select count(*) from goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update goods
+    <set >
+      <if test="record.gid != null" >
+        gid = #{record.gid,jdbcType=INTEGER},
+      </if>
+      <if test="record.gname != null" >
+        gname = #{record.gname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gprice != null" >
+        gprice = #{record.gprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.gcount != null" >
+        gcount = #{record.gcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.ginfo != null" >
+        ginfo = #{record.ginfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gimage != null" >
+        gimage = #{record.gimage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gbox != null" >
+        gbox = #{record.gbox,jdbcType=DECIMAL},
+      </if>
+      <if test="record.gtid != null" >
+        gtid = #{record.gtid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update goods
+    set gid = #{record.gid,jdbcType=INTEGER},
+      gname = #{record.gname,jdbcType=VARCHAR},
+      gprice = #{record.gprice,jdbcType=DECIMAL},
+      gcount = #{record.gcount,jdbcType=INTEGER},
+      ginfo = #{record.ginfo,jdbcType=VARCHAR},
+      gimage = #{record.gimage,jdbcType=VARCHAR},
+      gbox = #{record.gbox,jdbcType=DECIMAL},
+      gtid = #{record.gtid,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etc.entity.Goods" >
+    update goods
+    <set >
+      <if test="gname != null" >
+        gname = #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="gprice != null" >
+        gprice = #{gprice,jdbcType=DECIMAL},
+      </if>
+      <if test="gcount != null" >
+        gcount = #{gcount,jdbcType=INTEGER},
+      </if>
+      <if test="ginfo != null" >
+        ginfo = #{ginfo,jdbcType=VARCHAR},
+      </if>
+      <if test="gimage != null" >
+        gimage = #{gimage,jdbcType=VARCHAR},
+      </if>
+      <if test="gbox != null" >
+        gbox = #{gbox,jdbcType=DECIMAL},
+      </if>
+      <if test="gtid != null" >
+        gtid = #{gtid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where gid = #{gid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.etc.entity.Goods" >
+    update goods
+    set gname = #{gname,jdbcType=VARCHAR},
+      gprice = #{gprice,jdbcType=DECIMAL},
+      gcount = #{gcount,jdbcType=INTEGER},
+      ginfo = #{ginfo,jdbcType=VARCHAR},
+      gimage = #{gimage,jdbcType=VARCHAR},
+      gbox = #{gbox,jdbcType=DECIMAL},
+      gtid = #{gtid,jdbcType=INTEGER}
+    where gid = #{gid,jdbcType=INTEGER}
+  </update>
+</mapper>

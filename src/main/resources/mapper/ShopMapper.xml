@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etc.dao.ShopMapper" >
+  <resultMap id="BaseResultMap" type="com.etc.entity.Shop" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="sname" property="sname" jdbcType="VARCHAR" />
+    <result column="sinfo" property="sinfo" jdbcType="VARCHAR" />
+    <result column="stype" property="stype" jdbcType="INTEGER" />
+    <result column="saddress" property="saddress" jdbcType="VARCHAR" />
+    <result column="stel" property="stel" jdbcType="VARCHAR" />
+    <result column="simage" property="simage" jdbcType="VARCHAR" />
+    <result column="sstatus" property="sstatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sid, sname, sinfo, stype, saddress, stel, simage, sstatus
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.etc.entity.ShopExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from shop
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from shop
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from shop
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.etc.entity.ShopExample" >
+    delete from shop
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.etc.entity.Shop" >
+    <selectKey resultType="java.lang.Integer" keyProperty="sid" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into shop (sname, sinfo, stype, 
+      saddress, stel, simage, 
+      sstatus)
+    values (#{sname,jdbcType=VARCHAR}, #{sinfo,jdbcType=VARCHAR}, #{stype,jdbcType=INTEGER}, 
+      #{saddress,jdbcType=VARCHAR}, #{stel,jdbcType=VARCHAR}, #{simage,jdbcType=VARCHAR}, 
+      #{sstatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.etc.entity.Shop" >
+    <selectKey resultType="java.lang.Integer" keyProperty="sid" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into shop
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sname != null" >
+        sname,
+      </if>
+      <if test="sinfo != null" >
+        sinfo,
+      </if>
+      <if test="stype != null" >
+        stype,
+      </if>
+      <if test="saddress != null" >
+        saddress,
+      </if>
+      <if test="stel != null" >
+        stel,
+      </if>
+      <if test="simage != null" >
+        simage,
+      </if>
+      <if test="sstatus != null" >
+        sstatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sname != null" >
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="sinfo != null" >
+        #{sinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="stype != null" >
+        #{stype,jdbcType=INTEGER},
+      </if>
+      <if test="saddress != null" >
+        #{saddress,jdbcType=VARCHAR},
+      </if>
+      <if test="stel != null" >
+        #{stel,jdbcType=VARCHAR},
+      </if>
+      <if test="simage != null" >
+        #{simage,jdbcType=VARCHAR},
+      </if>
+      <if test="sstatus != null" >
+        #{sstatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.etc.entity.ShopExample" resultType="java.lang.Integer" >
+    select count(*) from shop
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update shop
+    <set >
+      <if test="record.sid != null" >
+        sid = #{record.sid,jdbcType=INTEGER},
+      </if>
+      <if test="record.sname != null" >
+        sname = #{record.sname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sinfo != null" >
+        sinfo = #{record.sinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stype != null" >
+        stype = #{record.stype,jdbcType=INTEGER},
+      </if>
+      <if test="record.saddress != null" >
+        saddress = #{record.saddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stel != null" >
+        stel = #{record.stel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.simage != null" >
+        simage = #{record.simage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sstatus != null" >
+        sstatus = #{record.sstatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update shop
+    set sid = #{record.sid,jdbcType=INTEGER},
+      sname = #{record.sname,jdbcType=VARCHAR},
+      sinfo = #{record.sinfo,jdbcType=VARCHAR},
+      stype = #{record.stype,jdbcType=INTEGER},
+      saddress = #{record.saddress,jdbcType=VARCHAR},
+      stel = #{record.stel,jdbcType=VARCHAR},
+      simage = #{record.simage,jdbcType=VARCHAR},
+      sstatus = #{record.sstatus,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etc.entity.Shop" >
+    update shop
+    <set >
+      <if test="sname != null" >
+        sname = #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="sinfo != null" >
+        sinfo = #{sinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="stype != null" >
+        stype = #{stype,jdbcType=INTEGER},
+      </if>
+      <if test="saddress != null" >
+        saddress = #{saddress,jdbcType=VARCHAR},
+      </if>
+      <if test="stel != null" >
+        stel = #{stel,jdbcType=VARCHAR},
+      </if>
+      <if test="simage != null" >
+        simage = #{simage,jdbcType=VARCHAR},
+      </if>
+      <if test="sstatus != null" >
+        sstatus = #{sstatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.etc.entity.Shop" >
+    update shop
+    set sname = #{sname,jdbcType=VARCHAR},
+      sinfo = #{sinfo,jdbcType=VARCHAR},
+      stype = #{stype,jdbcType=INTEGER},
+      saddress = #{saddress,jdbcType=VARCHAR},
+      stel = #{stel,jdbcType=VARCHAR},
+      simage = #{simage,jdbcType=VARCHAR},
+      sstatus = #{sstatus,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+</mapper>

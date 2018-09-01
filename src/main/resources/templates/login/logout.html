@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" th:inline="javascript">
+        var msg = [[${logoutMsg}]];
+        console.log(msg);
+        if(msg!=""&&msg!=undefined){
+            alert(msg);
+            location.href="/eleme/index.html";
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

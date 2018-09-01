@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>个人资料</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" >
+<link rel="stylesheet" th:href="@{/css/user/userdetail.css}" >
+</head>
+
+<body>
+	<div>
+		<div th:include="user/usernav"></div>
+		<div class="main">
+			<div class="row">
+				<div th:include="user/left"></div>
+				<div class="col-sm-8 well">
+					<div id="userinfo">
+						<h4>个人资料</h4>
+						<hr/>
+						<span id="username" th:text="${'用户名：'+session.user.uname}"></span> <br /> <a th:href="@{changepwd.html}">修改密码</a>
+					</div>
+				</div>
+				<div th:include="user/footer"></div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

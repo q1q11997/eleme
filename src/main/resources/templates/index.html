@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>饿了么-网上订餐_外卖_饿了么订餐官网</title>
+    <link th:href="@{/css/index.css}" rel="stylesheet" />
+</head>
+<body>
+<div id="content">
+    <div class="top">
+        <div style="padding: 30px; margin-left: 70%;">
+            <div th:if="${session.user != null}">
+                <span>欢迎你！</span>
+                <a th:href="@{/users/detail.html}">
+                    <span th:text="${session.user.uname }"></span>
+                </a>
+                <a th:href="@{/logout}" style="padding: 7px 14px; font-size: 12px;">注销</a>
+
+            </div>
+            <div th:unless="${session.user != null}">
+                <a th:href="@{/login.html}" style="padding: 7px 14px; font-size: 12px;">请登录</a>
+                <a th:href="@{/register.html}" style="padding: 7px 14px; font-size: 12px;">注册</a>
+                <a th:href="@{/slogin.html}" style="background-color: #5db423; padding: 7px 14px; font-size: 12px;">我是店家</a>
+                <a th:href="@{/adminlogin.html}" style="background-color: red;padding: 7px 14px; font-size: 12px;">我是管理员</a>
+            </div>
+
+        </div>
+        <div style="text-align: center; margin-top: 140px;">
+            <img th:src="@{/images/logo2.png}" />
+        </div>
+        <div>
+            <div style="text-align: center; margin-top: 30px; height:50px;">
+                <form action="shop/search.html" method="get" style=" margin:0;padding:0px">
+                    <input type="text" placeholder="请输入你的收货地址（例如 集美）" name="address"
+                           style="width: 800px; height: 40px; font-size:22px; padding-left:20px;" />
+                    <button type="submit"
+                            style="width: 80px; height: 44px; padding: 0;border:0px;font-size:20px;">搜索</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div style="width: 70%; margin: 0 auto;">
+        <footer class="footer">
+            <div class="container ">
+                <div class="footer-link">
+                    <h3 class="footer-link-title">用户帮助</h3>
+                    <a class="footer-link-item" href="#" target="_blank">我的客服</a>
+                </div>
+                <div class="footer-link">
+                    <h3 class="footer-link-title">商务合作</h3>
+                    <a class="footer-link-item" href="#" target="_blank">我要开店</a> <a
+                        class="footer-link-item" href="#" target="_blank">加盟指南</a> <a
+                        class="footer-link-item" href="#" target="_blank">市场合作</a> <a
+                        class="footer-link-item" href="#" target="_blank">开放平台</a>
+                </div>
+                <div class="footer-link">
+                    <h3 class="footer-link-title">关于我们</h3>
+                    <a class="footer-link-item" href="#" target="_blank">饿了么介绍</a> <a
+                        class="footer-link-item" href="#" target="_blank">加入我们</a> <a
+                        class="footer-link-item" href="#" target="_blank">联系我们</a> <a
+                        class="footer-link-item" href="#" target="_blank">规则中心</a>
+                </div>
+
+                <div class="footer-copyright serif">
+                    <h5 class="owner">上海拉扎斯信息科技有限公司</h5>
+                    <p>Copyright ©2008-2018 ele.me, All Rights
+                        Reserved.互联网药品信息服务资格证书 编号：（沪）-经营性-2016-0011</p>
+                </div>
+
+            </div>
+        </footer>
+    </div>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>个人订单中心</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" >
+<link rel="stylesheet" th:href="@{/css/user/userorders.css}" >
+
+<script type="text/javascript">
+	function timestampToTime(timestamp) {
+        var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        var Y = date.getFullYear() + '-';
+        var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        var D = date.getDate() + ' ';
+        if(date.getHours() < 10){
+            var h = '0'+date.getDate();
+		}
+		else{
+            var h = date.getHours() + ':';
+		}
+        if(date.getMinutes() < 10){
+            var m = '0'+date.getMinutes();
+		}else {
+            var m = date.getMinutes();
+		}
+        return Y+M+D+h+m;
+    }
+function detail(oid){
+	$.getJSON("../orders/showorders.html?oid="+oid,function(data){
+		$(".detail").empty();
+		$.each(data,function(){
+			$("#detail").append("<tr class='detail'><td>"+this.gid+"</td><td>"+this.gcount+"</td>")
+		})
+	})
+}
+function remove(oid){
+	var r=confirm("删除订单的同时也会删除评价,确认要删除订单吗？")
+	if(r == true){
+		$(function(){
+			$.ajax({
+				url : "../orders/"+oid+".do",
+				type : "DELETE",
+				success : function(data) {
+				    if(data == "1"){
+                        alert("删除成功");
+                        console.log(data);
+					}
+					else {
+				        alert("删除失败");
+					}
+
+				}
+			})
+			})
+	}
+}
+$(document).ready(function(){
+    var uid = [[${session.user.uid}]];
+    $.ajax({
+		url:"../orders/users/"+uid+".do",
+		type:"GET",
+		success:function (data) {
+		    if(data == "[]"){
+		        $("#empty").html("<p style='display: inline-block;padding-left: 110px;line-height: 115px;background: url(//shadow.elemecdn.com/faas/desktop/media/img/nodata.6477c5.png) no-repeat;color: #999;'>暂无记录</p>");
+			}
+			else {
+                var orders = JSON.parse(data);
+                var table=document.getElementById("orderstable");
+                for(var i=0;i<orders.length;i++){
+                    var row=table.insertRow(table.rows.length);
+                    var c1=row.insertCell(0);
+                    c1.innerHTML=timestampToTime(orders[i].otime);
+                    var c2=row.insertCell(1);
+                    c2.innerHTML=orders[i].ototal;
+                    var c3=row.insertCell(2);
+                    c3.innerHTML=orders[i].ostatus;
+                    var c4=row.insertCell(3);
+                    c4.innerHTML="<a href='#' style='margin-right: 15px'><span onclick='detail("+orders[i].oid+")'>订单详情</span></a>"+"<a href=''#'><span onclick=\"remove("+orders[i].oid+")\" class=\"glyphicon glyphicon-remove\"style=\"color: red;\"></span></a></td>";
+                }
+			}
+
+        }
+	})
+});
+</script>
+</head>
+
+<body>
+		<div th:include="user/usernav"></div>
+		<div class="main">
+			<div class="row">
+				<div th:include="user/left :: left"></div>
+				<div class="col-sm-8 well">
+					<div>
+						<table class="table table-hover table-bordered" id="orderstable">
+							<caption style="font-size: 18px;font-weight: 700;">历史订单记录</caption>
+							<thead>
+								<tr>
+									<th>下单时间</th>
+									<th>支付金额（元）</th>
+									<th>状态</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+						</table>
+						<div id="empty" style="text-align: center;"></div>
+					</div>
+				</div>
+				<div th:include="user/footer"></div>
+			</div>
+		</div>
+</body>
+</html>

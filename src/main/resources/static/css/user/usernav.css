@@ -1,0 +1,33 @@
+ul.nav > li > a{
+    font-size: 16px;
+    position: relative;
+    color: #fff;
+    width: 104px;
+    text-align: center;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+.serif {
+    font-family: Palatino, Optima, Georgia, serif;
+}
+
+.navbar-default {
+    background-color: #1e89e0  !important;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #FFFFFF  !important;
+}
+
+.navbar-header .navbar-brand {
+    color: #FFFFFF  !important;
+    font-size: 32px  !important;
+    vertical-align: top  !important;
+}
+
+.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand
+{
+    margin-left: 50px  !important;
+}
